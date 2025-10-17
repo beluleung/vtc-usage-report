@@ -1,0 +1,20 @@
+# requirements.txt
+
+# For connecting to AWS DynamoDB
+boto3
+
+# Core data manipulation library
+pandas
+
+# For reading .env files and Streamlit secrets
+python-dotenv
+
+# For the Streamlit web application framework
+streamlit
+
+# For generating Excel files
+openpyxl
+xlsxwriter
+
+# For generating DOCX files
+python-docx

@@ -1,0 +1,11 @@
+# .gitignore
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
