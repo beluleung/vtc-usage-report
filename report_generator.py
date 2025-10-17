@@ -1,4 +1,5 @@
 import io
+import streamlit as st
 import os
 import argparse
 from datetime import datetime, timedelta, UTC
@@ -88,13 +89,29 @@ def resolve_date_range(start_date_str: Optional[str], end_date_str: Optional[str
 
 
 def load_env_credentials() -> Tuple[str, str, str]:
-    load_dotenv()
-    access_key = os.getenv("VTC_DYNAMODB_ACCESS_KEY_ID")
-    secret_key = os.getenv("VTC_DYNAMODB_SECRET_ACCESS_KEY")
-    region = os.getenv("VTC_DYNAMODB_REGION")
+    """
+    Loads credentials safely.
+    - Tries to load from Streamlit's secrets manager when deployed.
+    - Falls back to a local .env file for local development.
+    """
+    try:
+        # This block runs when deployed on Streamlit Cloud
+        access_key = st.secrets["VTC_DYNAMODB_ACCESS_KEY_ID"]
+        secret_key = st.secrets["VTC_DYNAMODB_SECRET_ACCESS_KEY"]
+        region = st.secrets["VTC_DYNAMODB_REGION"]
+    except (AttributeError, KeyError):
+        # This block runs when st.secrets is not available (i.e., local development)
+        print("--- DIAGNOSTIC: Loading credentials from local .env file ---")
+        load_dotenv()
+        access_key = os.getenv("VTC_DYNAMODB_ACCESS_KEY_ID")
+        secret_key = os.getenv("VTC_DYNAMODB_SECRET_ACCESS_KEY")
+        region = os.getenv("VTC_DYNAMODB_REGION")
+
     if not access_key or not secret_key or not region:
+        # This error will now be more informative
         raise RuntimeError(
-            "Missing AWS credentials in .env file. Ensure VTC_DYNAMODB_... variables are set."
+            "Missing AWS credentials. Ensure they are set in Streamlit Secrets for deployment "
+            "or in a .env file for local development."
         )
     return access_key, secret_key, region
 
