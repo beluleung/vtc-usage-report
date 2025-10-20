@@ -5,14 +5,6 @@ import pandas as pd
 # Import the functions from your refactored script
 import report_generator
 
-# --- Page Configuration ---
-# This should be the first Streamlit command in your script
-st.set_page_config(
-    page_title="VTC OAK Usage Report",
-    page_icon="📄",
-    layout="centered"
-)
-
 # --- NEW FUNCTION TO HIDE STREAMLIT UI ELEMENTS ---
 def hide_streamlit_style():
     """Hides the Streamlit footer, menu, and header."""
@@ -29,6 +21,17 @@ def hide_streamlit_style():
         </style>
     """
     st.markdown(hide_style, unsafe_allow_html=True)
+
+# --- Page Configuration ---
+# This should be the first Streamlit command in your script
+st.set_page_config(
+    page_title="VTC OAK Usage Report",
+    page_icon="📄",
+    layout="centered"
+)
+
+# --- APPLY THE CUSTOM STYLE ---
+hide_streamlit_style()
 
 # --- Main App UI ---
 
