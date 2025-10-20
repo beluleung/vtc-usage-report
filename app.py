@@ -13,6 +13,23 @@ st.set_page_config(
     layout="centered"
 )
 
+# --- NEW FUNCTION TO HIDE STREAMLIT UI ELEMENTS ---
+def hide_streamlit_style():
+    """Hides the Streamlit footer, menu, and header."""
+    hide_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        div[data-testid="stDecoration"] {
+            visibility: hidden;
+            height: 0%;
+            position: fixed;
+        }
+        </style>
+    """
+    st.markdown(hide_style, unsafe_allow_html=True)
+
 # --- Main App UI ---
 
 # Display the VTC logo
